@@ -1,2 +1,3 @@
 # ProjetoVendaLanches
-Site para Venda de Lanches - ASP .NET Core MVC com .NET 6
+
+Em implementação (Site para Venda de Lanches - ASP .NET Core MVC com .NET 6)
