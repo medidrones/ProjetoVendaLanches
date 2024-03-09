@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VendaLanches.Context;
+using VendaLanches.Models;
 using VendaLanches.Repositories;
 using VendaLanches.Repositories.Interfaces;
 
@@ -21,8 +22,12 @@ public class Startup
 
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         services.AddControllersWithViews();
+        services.AddMemoryCache();
+        services.AddSession();
     }
    
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,11 +45,17 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
+        app.UseSession();
 
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapControllerRoute(
+                name: "categoriaFiltro",
+                pattern: "Lanche/{action}/{categoria?}",
+                defaults: new { Controller = "Lanche", Action = "List" });            
+
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
