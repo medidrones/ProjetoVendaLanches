@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using VendaLanches.Context;
 using VendaLanches.Models;
 using VendaLanches.Repositories;
@@ -20,6 +21,10 @@ public class Startup
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+        services.AddIdentity<IdentityUser, IdentityRole>()
+             .AddEntityFrameworkStores<AppDbContext>()
+             .AddDefaultTokenProviders();        
+
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
@@ -29,8 +34,9 @@ public class Startup
 
         services.AddControllersWithViews();
 
-        services.AddMemoryCache();
-        services.AddSession();
+        services.AddMemoryCache();       
+
+        services.AddSession();       
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,15 +52,22 @@ public class Startup
         }
 
         app.UseHttpsRedirection();
+
         app.UseStaticFiles();
         app.UseRouting();
 
         app.UseSession();
 
+        app.UseAuthentication();
         app.UseAuthorization();
+
 
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapControllerRoute(
+             name: "areas",
+             pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
             endpoints.MapControllerRoute(
                name: "categoriaFiltro",
                pattern: "Lanche/{action}/{categoria?}",
