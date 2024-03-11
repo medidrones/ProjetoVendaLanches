@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VendaLanches.Models;
 
-[Table("Categorias")]
 public class Categoria
 {
     [Key]

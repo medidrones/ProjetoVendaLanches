@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VendaLanches.Models;
 
-[Table("Lanches")]
 public class Lanche
 {
     [Key]

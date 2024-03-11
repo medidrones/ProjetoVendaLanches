@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VendaLanches.Repositories.Interfaces;
 
-namespace VendaLanches.Views.Shared.Components;
+namespace VendaLanches.Components;
 
 public class CategoriaMenu : ViewComponent
 {
