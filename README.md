@@ -69,9 +69,9 @@ Vai mostar como implementar o padrão MVC, definir as entidades do modelo de dom
 
 
 ## View
-![Tech skills](Docs/view1.jpg)
-![Tech skills](Docs/view2.jpg)
-![Tech skills](Docs/view3.jpg)
+![Tech skills](Docs/prjView1.jpg)
+![Tech skills](Docs/prjView1.jpg)
+![Tech skills](Docs/prjView1.jpg)
 
 
 ## Roteamentto
