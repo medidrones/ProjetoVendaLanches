@@ -27,7 +27,7 @@ public class AdminLanchesController : Controller
 
         if (!string.IsNullOrWhiteSpace(filter))
         {
-            resultado = resultado.Where(p => p.Nome.Contains(filter));
+            resultado = resultado.Where(p => p.Nome!.Contains(filter));
         }
 
         var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "Nome");
@@ -159,7 +159,7 @@ public class AdminLanchesController : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var lanche = await _context.Lanches.FindAsync(id);
-        _context.Lanches.Remove(lanche);
+        _context.Lanches.Remove(lanche!);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));

@@ -134,7 +134,7 @@ public class AdminCategoriasController : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var categoria = await _context.Categorias.FindAsync(id);
-        _context.Categorias.Remove(categoria);
+        _context.Categorias.Remove(categoria!);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));

@@ -28,7 +28,7 @@ public class RelatorioVendasService
         }
 
         return await resultado
-                     .Include(l => l.PedidoItens)
+                     .Include(l => l.PedidoItens!)
                      .ThenInclude(l => l.Lanche)
                      .OrderByDescending(x => x.PedidoEnviado)
                      .ToListAsync();

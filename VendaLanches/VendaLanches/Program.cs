@@ -79,6 +79,7 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
+#pragma warning disable ASP0014
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
@@ -100,10 +101,10 @@ app.Run();
 void CriarPerfisUsuarios(WebApplication app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-    using (var scope = scopedFactory.CreateScope())
+    using (var scope = scopedFactory!.CreateScope())
     {
         var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>();
-        service.SeedUsers();
+        service!.SeedUsers();
         service.SeedRoles();
     }
 }

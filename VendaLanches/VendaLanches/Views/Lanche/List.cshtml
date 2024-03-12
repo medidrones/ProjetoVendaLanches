@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        @foreach (var lanche in Model.Lanches)
+        @foreach (var lanche in Model.Lanches!)
         {
             <partial name="_LanchesResumo" for="@lanche" />
         }

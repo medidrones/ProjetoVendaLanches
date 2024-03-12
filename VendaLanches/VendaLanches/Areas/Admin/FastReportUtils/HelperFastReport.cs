@@ -17,7 +17,7 @@ public class HelperFastReport
             if (info.PropertyType.IsGenericType &&
                 info.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                result.Columns.Add(new DataColumn(info.Name, Nullable.GetUnderlyingType(info.PropertyType)));
+                result.Columns.Add(new DataColumn(info.Name, Nullable.GetUnderlyingType(info.PropertyType)!));
             }
             else
             {
@@ -34,11 +34,11 @@ public class HelperFastReport
                 if (info.PropertyType.IsGenericType &&
                     info.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
-                    object t = info.GetValue(el);
+                    object t = info.GetValue(el)!;
 
                     if (t == null)
                     {
-                        t = Activator.CreateInstance(Nullable.GetUnderlyingType(info.PropertyType));
+                        t = Activator.CreateInstance(Nullable.GetUnderlyingType(info.PropertyType)!)!;
                     }
 
                     row[info.Name] = t;
@@ -47,7 +47,7 @@ public class HelperFastReport
                 {
                     if (info.PropertyType == typeof(byte[]))
                     {
-                        var imageData = (byte[])info.GetValue(el);
+                        var imageData = (byte[])info.GetValue(el)!;
                         var bytes = new byte[imageData.Length - offset];
 
                         Array.Copy(imageData, offset, bytes, 0, bytes.Length);

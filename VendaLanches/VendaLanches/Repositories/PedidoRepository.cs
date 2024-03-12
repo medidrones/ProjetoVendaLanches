@@ -28,7 +28,7 @@ public class PedidoRepository : IPedidoRepository
             var pedidoDetail = new PedidoDetalhe()
             {
                 Quantidade = carrinhoItem.Quantidade,
-                LancheId = carrinhoItem.Lanche.LancheId,
+                LancheId = carrinhoItem.Lanche!.LancheId,
                 PedidoId = pedido.PedidoId,
                 Preco = carrinhoItem.Lanche.Preco
             };

@@ -22,7 +22,7 @@ public class AdminPedidosController : Controller
     public IActionResult PedidoLanches(int? id)
     {
         var pedido = _context.Pedidos
-            .Include(pd => pd.PedidoItens)
+            .Include(pd => pd.PedidoItens!)
             .ThenInclude(l => l.Lanche)
             .FirstOrDefault(p => p.PedidoId == id);
 
@@ -30,7 +30,7 @@ public class AdminPedidosController : Controller
         {
             Response.StatusCode = 404;
 
-            return View("PedidoNotFound", id.Value);
+            return View("PedidoNotFound", id!.Value);
         }
 
         PedidoLancheViewModel pedidoLanches = new PedidoLancheViewModel()
@@ -50,7 +50,7 @@ public class AdminPedidosController : Controller
 
         if (!string.IsNullOrWhiteSpace(filter))
         {
-            resultado = resultado.Where(p => p.Nome.Contains(filter));
+            resultado = resultado.Where(p => p.Nome!.Contains(filter));
         }
 
         var model = await PagingList.CreateAsync(resultado, 3, pageindex, sort, "Nome");
@@ -171,7 +171,7 @@ public class AdminPedidosController : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var pedido = await _context.Pedidos.FindAsync(id);
-        _context.Pedidos.Remove(pedido);
+        _context.Pedidos.Remove(pedido!);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));

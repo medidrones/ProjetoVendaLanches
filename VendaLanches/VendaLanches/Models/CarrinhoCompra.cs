@@ -18,20 +18,20 @@ public class CarrinhoCompra
     public static CarrinhoCompra GetCarrinho(IServiceProvider services)
     {
         //define uma sessão
-        ISession session =
-            services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
+        ISession? session =
+            services.GetRequiredService<IHttpContextAccessor>()?.HttpContext!.Session;
 
         //obtem um serviço do tipo do nosso contexto 
         var context = services.GetService<AppDbContext>();
 
         //obtem ou gera o Id do carrinho
-        string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
+        string carrinhoId = session!.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
 
         //atribui o id do carrinho na Sessão
-        session.SetString("CarrinhoId", carrinhoId);
+        session!.SetString("CarrinhoId", carrinhoId);
 
         //retorna o carrinho com o contexto e o Id atribuido ou obtido
-        return new CarrinhoCompra(context)
+        return new CarrinhoCompra(context!)
         {
             CarrinhoCompraId = carrinhoId
         };
@@ -40,7 +40,7 @@ public class CarrinhoCompra
     public void AdicionarAoCarrinho(Lanche lanche)
     {
         var carrinhoCompraItem = _context.CarrinhoCompraItens.SingleOrDefault(s => 
-            s.Lanche.LancheId == lanche.LancheId && 
+            s.Lanche!.LancheId == lanche.LancheId && 
             s.CarrinhoCompraId == CarrinhoCompraId);
 
         if (carrinhoCompraItem == null)
@@ -65,7 +65,7 @@ public class CarrinhoCompra
     public int RemoverDoCarrinho(Lanche lanche)
     {
         var carrinhoCompraItem = _context.CarrinhoCompraItens.SingleOrDefault(s => 
-            s.Lanche.LancheId == lanche.LancheId && 
+            s.Lanche!.LancheId == lanche.LancheId && 
             s.CarrinhoCompraId == CarrinhoCompraId);
 
         var quantidadeLocal = 0;
@@ -108,7 +108,7 @@ public class CarrinhoCompra
     {
         var total = _context.CarrinhoCompraItens
             .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
-            .Select(c => c.Lanche.Preco * c.Quantidade).Sum();
+            .Select(c => c.Lanche!.Preco * c.Quantidade).Sum();
 
         return total;
     }

@@ -27,7 +27,7 @@ public class LancheController : Controller
         else
         {
             lanches = _lancheRepository.Lanches
-                .Where(l => l.Categoria.CategoriaNome
+                .Where(l => l.Categoria!.CategoriaNome!
                 .Equals(categoria))
                 .OrderBy(c => c.Nome);
 
@@ -63,7 +63,7 @@ public class LancheController : Controller
         else
         {
             lanches = _lancheRepository.Lanches
-                .Where(p => p.Nome.ToLower()
+                .Where(p => p.Nome!.ToLower()
                 .Contains(searchString.ToLower()));
 
             if (lanches.Any())

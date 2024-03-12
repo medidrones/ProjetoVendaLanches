@@ -9,7 +9,7 @@
 <form method="get" class="form-inline">
 
     <input name="filter" class="form-control" placeholder="filtro"
-           value="@Model.RouteValue["Filter"]" />
+           value="@Model.RouteValue!["Filter"]" />
 
     <button type="submit" class="btn btn-info">Procurar</button>
 </form>

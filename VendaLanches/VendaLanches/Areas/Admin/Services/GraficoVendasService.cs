@@ -18,7 +18,7 @@ public class GraficoVendasService
 
         var lanches = (from pd in context.PedidosDetalhes 
                        join l in context.Lanches on pd.LancheId equals l.LancheId
-                       where pd.Pedido.PedidoEnviado >= data
+                       where pd.Pedido!.PedidoEnviado >= data
                        group pd by new { pd.LancheId, l.Nome }
                        into g
                        select new

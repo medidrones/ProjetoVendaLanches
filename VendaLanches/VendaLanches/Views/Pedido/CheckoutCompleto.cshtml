@@ -19,10 +19,10 @@
                     <th>Lanche</th>
                     <th>Preço</th>
                 </tr>
-                        @foreach (var item in Model.PedidoItens)
+                        @foreach (var item in Model.PedidoItens!)
                         {
                     <tr>
-                        <td><img src="@item.Lanche.ImagemUrl" width="40" height="40" /></td>
+                        <td><img src="@item.Lanche!.ImagemUrl" width="40" height="40" /></td>
                         <td>@item.Quantidade</td>
                         <td>@item.Lanche.Nome</td>
                         <td>@item.Lanche.Preco</td>

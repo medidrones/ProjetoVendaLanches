@@ -44,7 +44,7 @@ public class AdminImagensController : Controller
             long size = files.Sum(f => f.Length);
             var filePathsName = new List<string>();
             var filePath = Path.Combine(_hostingEnvironment.WebRootPath, 
-                _myConfig.NomePastaImagensProdutos);
+                _myConfig.NomePastaImagensProdutos!);
 
             foreach (var formFile in files)
             {
@@ -87,7 +87,7 @@ public class AdminImagensController : Controller
         try
         {
             var userImagesPath = Path.Combine(_hostingEnvironment.WebRootPath, 
-                _myConfig.NomePastaImagensProdutos);
+                _myConfig.NomePastaImagensProdutos!);
 
             DirectoryInfo dir = new DirectoryInfo(userImagesPath);
             FileInfo[] files = dir.GetFiles();

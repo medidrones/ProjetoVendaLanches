@@ -8,7 +8,7 @@
 <form method="get" class="form-inline">
 
     <input name="filter" class="form-control" placeholder="filtro"
-           value="@Model.RouteValue["Filter"]" />
+           value="@Model.RouteValue!["Filter"]" />
 
     <button type="submit" class="btn btn-info"> Procurar</button>
 </form>
@@ -69,7 +69,7 @@ Total de Lanches : @Model.TotalRecordCount
                             @Html.DisplayFor(modelItem => item.EmEstoque)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Categoria.CategoriaNome)
+                            @Html.DisplayFor(modelItem => item.Categoria!.CategoriaNome)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.LancheId">Edita</a> |

@@ -44,7 +44,7 @@ public class PedidoController : Controller
         foreach (var item in items)
         {
             totalItensPedido += item.Quantidade;
-            precoTotalPedido += (item.Lanche.Preco * item.Quantidade);
+            precoTotalPedido += (item.Lanche!.Preco * item.Quantidade);
         }
 
         //atribui os valores obtidos ao pedido

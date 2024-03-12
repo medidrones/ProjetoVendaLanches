@@ -33,11 +33,11 @@ public class AccountController : Controller
         if (!ModelState.IsValid)
             return View(loginVM);
 
-        var user = await _userManager.FindByNameAsync(loginVM.UserName);
+        var user = await _userManager.FindByNameAsync(loginVM.UserName!);
 
         if (user != null)
         {
-            var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password!, false, false);
 
             if (result.Succeeded)
             {
@@ -69,7 +69,7 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var user = new IdentityUser { UserName = registroVM.UserName };
-            var result = await _userManager.CreateAsync(user, registroVM.Password);
+            var result = await _userManager.CreateAsync(user, registroVM.Password!);
 
             if (result.Succeeded)
             {                
@@ -91,7 +91,7 @@ public class AccountController : Controller
     public async Task<IActionResult> Logout()
     {
         HttpContext.Session.Clear();
-        HttpContext.User = null;
+        HttpContext.User = null!;
         await _signInManager.SignOutAsync();
 
         return RedirectToAction("Index", "Home");

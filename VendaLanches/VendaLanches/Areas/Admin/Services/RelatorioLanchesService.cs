@@ -13,7 +13,7 @@ public class RelatorioLanchesService
         _context = context;
     }
 
-    public async Task<IEnumerable<Lanche>> GetLanchesReport()
+    public async Task<IEnumerable<Lanche>?> GetLanchesReport()
     {
         var lanches = await _context.Lanches.ToListAsync();
 
@@ -23,7 +23,7 @@ public class RelatorioLanchesService
         return lanches;
     }
 
-    public async Task<IEnumerable<Categoria>> GetCategoriasReport()
+    public async Task<IEnumerable<Categoria>?> GetCategoriasReport()
     {
         var categorias = await _context.Categorias.ToListAsync();
 
