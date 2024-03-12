@@ -7,6 +7,7 @@ using VendaLanches.Models;
 using VendaLanches.Repositories.Interfaces;
 using VendaLanches.Repositories;
 using VendaLanches.Services;
+using FastReport.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options => 
 options.UseSqlServer(connection));
+
+FastReport.Utils.RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
@@ -27,6 +30,7 @@ builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
 builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
 builder.Services.AddScoped<RelatorioVendasService>();
 builder.Services.AddScoped<GraficoVendasService>();
+builder.Services.AddScoped<RelatorioLanchesService>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -65,6 +69,7 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+app.UseFastReport();
 app.UseRouting();
 
 CriarPerfisUsuarios(app);
