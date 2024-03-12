@@ -12,8 +12,8 @@ Vai mostar como implementar o padrão MVC, definir as entidades do modelo de dom
 ## Apresentação do Projeto - Site para Vendas de Lanches
 
 ### Arquiteturas
-![Tech skills](Docs/Arquitetura do projeto.jpg)
-![Tech skills](Docs/Arquitetura Monolítica.jpg)
+![Tech skills](Docs/arquit1.jpg)
+![Tech skills](Docs/arquit1.jpg)
 
 
 ### Certificados
