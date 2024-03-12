@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using VendaLanches.Context;
 using VendaLanches.Models;
 
@@ -16,13 +17,24 @@ public class AdminLanchesController : Controller
     public AdminLanchesController(AppDbContext context)
     {
         _context = context;
-    }
-   
-    public async Task<IActionResult> Index()
-    {
-        var appDbContext = _context.Lanches.Include(l => l.Categoria);
+    }   
 
-        return View(await appDbContext.ToListAsync());
+    public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Nome")
+    {
+        var resultado = _context.Lanches
+            .Include(l => l.Categoria)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(filter))
+        {
+            resultado = resultado.Where(p => p.Nome.Contains(filter));
+        }
+
+        var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "Nome");
+        model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+
+        return View(model);
+
     }
 
     public async Task<IActionResult> Details(int? id)
@@ -46,7 +58,7 @@ public class AdminLanchesController : Controller
 
     public IActionResult Create()
     {
-        ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome");
+        ViewBag.CategoriaId = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome");
 
         return View();
     }
@@ -63,7 +75,7 @@ public class AdminLanchesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+        ViewBag.CategoriaId = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
 
         return View(lanche);
     }
@@ -82,11 +94,11 @@ public class AdminLanchesController : Controller
             return NotFound();
         }
 
-        ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
+        ViewBag.CategoriaId = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
 
         return View(lanche);
     }
-   
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("LancheId,Nome,DescricaoCurta,DescricaoDetalhada,Preco,ImagemUrl,ImagemThumbnailUrl,IsLanchePreferido,EmEstoque,CategoriaId")] Lanche lanche)
@@ -122,7 +134,7 @@ public class AdminLanchesController : Controller
 
         return View(lanche);
     }
-     
+
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -133,6 +145,7 @@ public class AdminLanchesController : Controller
         var lanche = await _context.Lanches
             .Include(l => l.Categoria)
             .FirstOrDefaultAsync(m => m.LancheId == id);
+
         if (lanche == null)
         {
             return NotFound();
@@ -140,7 +153,7 @@ public class AdminLanchesController : Controller
 
         return View(lanche);
     }
-   
+ 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
