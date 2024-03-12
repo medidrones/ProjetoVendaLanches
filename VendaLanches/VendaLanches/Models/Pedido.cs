@@ -29,11 +29,15 @@ public class Pedido
     [StringLength(10, MinimumLength = 8)]
     public string Cep { get; set; }
 
+    [Required(ErrorMessage = "Informe o seu Estado")]
+    [Display(Name = "Estado")]
     [StringLength(10)]
-    public string? Estado { get; set; }
+    public string Estado { get; set; }
 
+    [Required(ErrorMessage = "Informe a sua Cidade")]
+    [Display(Name = "Cidade")]
     [StringLength(50)]
-    public string? Cidade { get; set; }
+    public string Cidade { get; set; }
 
     [Required(ErrorMessage = "Informe o seu telefone")]
     [StringLength(25)]

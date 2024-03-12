@@ -26,7 +26,9 @@ public class Startup
 
         services.AddIdentity<IdentityUser, IdentityRole>()
              .AddEntityFrameworkStores<AppDbContext>()
-             .AddDefaultTokenProviders();        
+             .AddDefaultTokenProviders();
+
+        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
 
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
@@ -53,8 +55,7 @@ public class Startup
             options.PageParameterName = "pageindex";
         });
 
-        services.AddMemoryCache();       
-
+        services.AddMemoryCache();
         services.AddSession();       
     }
 
