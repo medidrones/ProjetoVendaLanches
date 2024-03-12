@@ -7,8 +7,8 @@
     <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
           method="post" class="navbar-left">
         <ul class="nav navbar-nav navbar-left">
-            <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
-                Logout : @User.Identity.Name &nbsp;
+            <button type="submit" style="width:auto" class="nav-link btn btn-link">
+                <strong> Logout : @User.Identity.Name &nbsp; </strong>
             </button>
         </ul>
     </form>
@@ -16,7 +16,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-left">
-        <a class="nav-link text-light" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@string.Format("{0}{1}",Context.Request.Path, Context.Request.QueryString)" style="color:white">&nbsp; Login&nbsp; </a>
+        <a class="nav-link text-light" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@string.Format("{0}{1}",Context.Request.Path, Context.Request.QueryString)" style="color:white">&nbsp; Log in&nbsp; </a>
         <a class="nav-link text-light" asp-controller="Account" asp-action="Register" style="color:white">&nbsp;Registro&nbsp;&nbsp;&nbsp; </a>
     </ul>
 

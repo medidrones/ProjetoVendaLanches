@@ -6,20 +6,20 @@ namespace VendaLanches.Repositories;
 
 public class PedidoRepository : IPedidoRepository
 {
-    private readonly AppDbContext _context;
+    private readonly AppDbContext _appDbContext;
     private readonly CarrinhoCompra _carrinhoCompra;
 
-    public PedidoRepository(AppDbContext context, CarrinhoCompra carrinhoCompra)
+    public PedidoRepository(AppDbContext appDbContext, CarrinhoCompra carrinhoCompra)
     {
-        _context = context;
+        _appDbContext = appDbContext;
         _carrinhoCompra = carrinhoCompra;
     }
 
     public void CriarPedido(Pedido pedido)
     {
         pedido.PedidoEnviado = DateTime.Now;
-        _context.Pedidos.Add(pedido);
-        _context.SaveChanges();
+        _appDbContext.Pedidos.Add(pedido);
+        _appDbContext.SaveChanges();
 
         var carrinhoCompraItens = _carrinhoCompra.CarrinhoCompraItens;
 
@@ -33,9 +33,9 @@ public class PedidoRepository : IPedidoRepository
                 Preco = carrinhoItem.Lanche.Preco
             };
 
-            _context.PedidosDetalhes.Add(pedidoDetail);
+            _appDbContext.PedidosDetalhes.Add(pedidoDetail);
         }
 
-        _context.SaveChanges();
+        _appDbContext.SaveChanges();
     }
 }

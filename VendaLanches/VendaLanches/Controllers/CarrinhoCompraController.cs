@@ -22,20 +22,19 @@ public class CarrinhoCompraController : Controller
         var itens = _carrinhoCompra.GetCarrinhoCompraItens();
         _carrinhoCompra.CarrinhoCompraItens = itens;
 
-        var carrinhoCompraVm = new CarrinhoCompraViewModel
+        var carrinhoCompraVM = new CarrinhoCompraViewModel
         {
             CarrinhoCompra = _carrinhoCompra,
             CarrinhoCompraTotal = _carrinhoCompra.GetCarrinhoCompraTotal()
         };
 
-        return View(carrinhoCompraVm);
+        return View(carrinhoCompraVM);
     }
 
     [Authorize]
     public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId)
     {
-        var lancheSelecionado = _lancheRepository.Lanches
-            .FirstOrDefault(p => p.LancheId == lancheId);
+        var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.LancheId == lancheId);
 
         if (lancheSelecionado != null)
         {
@@ -46,10 +45,9 @@ public class CarrinhoCompraController : Controller
     }
 
     [Authorize]
-    public IActionResult RemoverItemNoCarrinhoCompra(int lancheId)
+    public IActionResult RemoverItemDoCarrinhoCompra(int lancheId)
     {
-        var lancheSelecionado = _lancheRepository.Lanches
-            .FirstOrDefault(p => p.LancheId == lancheId);
+        var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.LancheId == lancheId);
 
         if (lancheSelecionado != null)
         {

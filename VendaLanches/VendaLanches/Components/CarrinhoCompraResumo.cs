@@ -15,15 +15,16 @@ public class CarrinhoCompraResumo : ViewComponent
 
     public IViewComponentResult Invoke()
     {
-        var itens = _carrinhoCompra.GetCarrinhoCompraItens();        
+        var itens = _carrinhoCompra.GetCarrinhoCompraItens();       
+
         _carrinhoCompra.CarrinhoCompraItens = itens;
 
-        var carrinhoCompraVm = new CarrinhoCompraViewModel
+        var carrinhoCompraVM = new CarrinhoCompraViewModel
         {
             CarrinhoCompra = _carrinhoCompra,
             CarrinhoCompraTotal = _carrinhoCompra.GetCarrinhoCompraTotal()
         };
 
-        return View(carrinhoCompraVm);
+        return View(carrinhoCompraVM);
     }
 }

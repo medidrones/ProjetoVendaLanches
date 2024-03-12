@@ -27,7 +27,8 @@ public class LancheController : Controller
         else
         {
             lanches = _lancheRepository.Lanches
-                .Where(l => l.Categoria.CategoriaNome == categoria)
+                .Where(l => l.Categoria.CategoriaNome
+                .Equals(categoria))
                 .OrderBy(c => c.Nome);
 
             categoriaAtual = categoria;
@@ -44,8 +45,7 @@ public class LancheController : Controller
 
     public IActionResult Details(int lancheId)
     {
-        var lanche = _lancheRepository.Lanches
-            .FirstOrDefault(l => l.LancheId == lancheId);
+        var lanche = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
 
         return View(lanche);
     }
@@ -63,7 +63,8 @@ public class LancheController : Controller
         else
         {
             lanches = _lancheRepository.Lanches
-                      .Where(p => p.Nome.ToLower().Contains(searchString.ToLower()));
+                .Where(p => p.Nome.ToLower()
+                .Contains(searchString.ToLower()));
 
             if (lanches.Any())
                 categoriaAtual = "Lanches";

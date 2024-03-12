@@ -11,8 +11,7 @@ public class AccountController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
 
-    public AccountController(UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager)
+    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -50,6 +49,7 @@ public class AccountController : Controller
                 return Redirect(loginVM.ReturnUrl);
             }
         }
+
         ModelState.AddModelError("", "Falha ao realizar o login!!");
 
         return View(loginVM);
