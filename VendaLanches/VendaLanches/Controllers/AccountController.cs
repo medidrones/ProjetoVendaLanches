@@ -38,8 +38,7 @@ public class AccountController : Controller
 
         if (user != null)
         {
-            var result = await _signInManager.PasswordSignInAsync(user,
-                loginVM.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
 
             if (result.Succeeded)
             {
@@ -51,7 +50,6 @@ public class AccountController : Controller
                 return Redirect(loginVM.ReturnUrl);
             }
         }
-
         ModelState.AddModelError("", "Falha ao realizar o login!!");
 
         return View(loginVM);
@@ -74,12 +72,14 @@ public class AccountController : Controller
             var result = await _userManager.CreateAsync(user, registroVM.Password);
 
             if (result.Succeeded)
-            {              
+            {                
+                await _userManager.AddToRoleAsync(user, "Member");
+
                 return RedirectToAction("Login", "Account");
             }
             else
             {
-                ModelState.AddModelError("Registro", "Falha ao registrar o usuário");
+                this.ModelState.AddModelError("Registro", "Falha ao registrar o usuário");
             }
         }
 
@@ -95,5 +95,10 @@ public class AccountController : Controller
         await _signInManager.SignOutAsync();
 
         return RedirectToAction("Index", "Home");
+    }
+
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 }
